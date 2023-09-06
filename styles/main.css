@@ -19,13 +19,15 @@ body {
   justify-content: center;
   align-items: center;
   flex-wrap: wrap;
-  height: 100vh;
-  width: 100vw;
+  margin: 20px;
 }
 .game__container canvas {
   border: 4px solid #ff6600;
   border-radius: 10px;
   background-color: #feff9d;
+}
+.game__container .game {
+  padding: 0 2px 2px 0;
 }
 
 .btns {
@@ -35,7 +37,7 @@ body {
   align-items: center;
   flex-wrap: wrap;
   gap: 15px;
-  margin: 50px auto;
+  margin: 20px auto;
   width: 100%;
 }
 .btns .btn {
@@ -43,7 +45,7 @@ body {
   border-radius: 10px;
   border-color: #ff6600;
   font-family: inherit;
-  margin: 0;
+  font-weight: bold;
   padding: 10px 20px;
   width: 100px;
   cursor: pointer;
@@ -71,9 +73,6 @@ body {
 }
 
 @media (max-width: 440px) {
-  .btn {
-    margin-top: 25px;
-  }
   .up, .down {
     margin: 0 100%;
   }
