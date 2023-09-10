@@ -10,13 +10,17 @@ $primary-font: 'Montserrat', sans-serif;
 	flex-wrap: $wrap;
 }
 @mixin btn {
+	width: 100px;
+	padding: 10px 20px;
+	font-family: inherit;
+	font-weight: bold;
 	background-color: #fdef05;
 	border-radius: 10px;
 	border-color: #ff6600;
-	font-family: inherit;
-	font-weight: bold;
-	padding: 10px 20px;
-	width: 100px;
+	cursor: pointer;
+	&:hover {
+		transform: scale(1.1);
+	}
 }
 
 // Reset global styles
@@ -37,6 +41,21 @@ body {
 }
 
 // Game container styles
+#game__menu {
+	display: grid;
+	place-content: center;
+	height: 100vh;
+	h1 {
+		color: #fff;
+		font-size: 4.5rem;
+		margin-bottom: 20px;
+	}
+	button {
+		@include btn;
+		width: 100%;
+	}
+}
+
 .game__container {
 	@include flexCenter(row, center, center, wrap);
 	margin: 20px;
@@ -54,10 +73,6 @@ body {
 	width: 100%;
 	.btn {
 		@include btn;
-		cursor: pointer;
-		&:hover {
-			transform: scale(1.1);
-		}
 		.btn:not(:last-child) {
 			margin-right: 10px;
 		}
@@ -79,7 +94,45 @@ body {
 	}
 }
 
+.final__message {
+	@include flexCenter(column, center, center, wrap);
+	height: 100vh;
+	width: 100%;
+	h2 {
+		font-size: 3rem;
+		color: #fff;
+		margin-bottom: 20px;
+	}
+	button {
+		@include btn();
+		width: 20%;
+		margin-bottom: 20px;
+	}
+}
+
 @media (max-width: 440px) {
+	.final__message {
+		@include flexCenter(column, center, center, null);
+		height: 100vh;
+		width: 100%;
+		h2 {
+			text-align: center;
+			font-size: 1.8rem;
+			color: #fff;
+			margin-bottom: 20px;
+		}
+		button {
+			@include btn();
+			width: 50%;
+			margin-bottom: 20px;
+		}
+	}
+	.game__container {
+		margin: 100px 0;
+	}
+	.btns {
+		margin-bottom: 70px;
+	}
 	.up, .down {
 		margin: 0 100%;
 	}

@@ -13,6 +13,31 @@ body {
   background-color: rebeccapurple;
 }
 
+#game__menu {
+  display: grid;
+  place-content: center;
+  height: 100vh;
+}
+#game__menu h1 {
+  color: #fff;
+  font-size: 4.5rem;
+  margin-bottom: 20px;
+}
+#game__menu button {
+  width: 100px;
+  padding: 10px 20px;
+  font-family: inherit;
+  font-weight: bold;
+  background-color: #fdef05;
+  border-radius: 10px;
+  border-color: #ff6600;
+  cursor: pointer;
+  width: 100%;
+}
+#game__menu button:hover {
+  transform: scale(1.1);
+}
+
 .game__container {
   display: flex;
   flex-direction: row;
@@ -38,13 +63,13 @@ body {
   width: 100%;
 }
 .btns .btn {
+  width: 100px;
+  padding: 10px 20px;
+  font-family: inherit;
+  font-weight: bold;
   background-color: #fdef05;
   border-radius: 10px;
   border-color: #ff6600;
-  font-family: inherit;
-  font-weight: bold;
-  padding: 10px 20px;
-  width: 100px;
   cursor: pointer;
 }
 .btns .btn:hover {
@@ -69,7 +94,72 @@ body {
   color: #fff;
 }
 
+.final__message {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  height: 100vh;
+  width: 100%;
+}
+.final__message h2 {
+  font-size: 3rem;
+  color: #fff;
+  margin-bottom: 20px;
+}
+.final__message button {
+  width: 100px;
+  padding: 10px 20px;
+  font-family: inherit;
+  font-weight: bold;
+  background-color: #fdef05;
+  border-radius: 10px;
+  border-color: #ff6600;
+  cursor: pointer;
+  width: 20%;
+  margin-bottom: 20px;
+}
+.final__message button:hover {
+  transform: scale(1.1);
+}
+
 @media (max-width: 440px) {
+  .final__message {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    width: 100%;
+  }
+  .final__message h2 {
+    text-align: center;
+    font-size: 1.8rem;
+    color: #fff;
+    margin-bottom: 20px;
+  }
+  .final__message button {
+    width: 100px;
+    padding: 10px 20px;
+    font-family: inherit;
+    font-weight: bold;
+    background-color: #fdef05;
+    border-radius: 10px;
+    border-color: #ff6600;
+    cursor: pointer;
+    width: 50%;
+    margin-bottom: 20px;
+  }
+  .final__message button:hover {
+    transform: scale(1.1);
+  }
+  .game__container {
+    margin: 100px 0;
+  }
+  .btns {
+    margin-bottom: 70px;
+  }
   .up, .down {
     margin: 0 100%;
   }

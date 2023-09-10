@@ -1,17 +1,16 @@
 // Objeto que asigna caracteres a emojis
 const emojis = {
 	'-': ' ',
-	'O': '🌀',
-	'X': '💣',
 	'I': '🏁',
+	'X': '💣',
+	'O': '🌀',
 	'PLAYER': '👾',
-	'BOMB_COLLISION': '🔥',
-	'GAME_OVER': '💀',
-	'WIN': '🏆',
+	'BOMB_COLLISION': '💥',
+	'HEART': '🧡',
 };
 
 // Definición de mapas del juego
-const maps = [];
+const maps = []
 maps.push(`
   	IXXXXXXXXX
   	-XXXXXXXXX
@@ -46,5 +45,41 @@ maps.push(`
   	XX-----XXX
   	XX-XXXXXXX
   	XX-----OXX
+  	XXXXXXXXXX
+`)
+maps.push(`
+  	OXXXXXXXXX
+  	------XXXX
+  	--XXX--XXX
+  	-XXXXX--XX
+  	-------XXX
+  	XXXXX--XXX
+  	XXXXX-XXXX
+  	XX----XXXX
+  	---XXXXXXX
+  	IXXXXXXXXX
+`)
+maps.push(`
+  	XXXXIXXXXX
+  	XXX--XXXXX
+  	XXX---XXXX
+  	XXX--XXXXX
+  	-XX----XXX
+  	-XXXX--XXX
+  	------XXXX
+  	XXX-XXXXXX
+  	-----XXXXX
+  	OXXXXXXXXX
+`)
+maps.push(`
+  	XXXXOXXXXX
+  	XXX----XXX
+  	------XXXX
+  	-XXX--XXXX
+  	-X----XXXX
+  	-XXXX--XXX
+  	----XX--XX
+  	XXX--XX-XX
+  	XXXX--IXXX
   	XXXXXXXXXX
 `)
