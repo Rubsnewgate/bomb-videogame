@@ -3,15 +3,18 @@
 ------------
 
 ### Simple JavaScript game
-[========]
+
+------------
+------------
 
 - You have three lives, take care of them as you will encounter multiple obstacles, avoid them to reach the end.
 
 ------------
+------------
 
 Course Project: Create Your First Video Game on Platzi.
 
-[========]
+------------
 
 #### Technologies I used for the game:
 - HTML 5
@@ -20,5 +23,6 @@ Course Project: Create Your First Video Game on Platzi.
 #### CSS Preprocessor:
 - SASS
 
-[========]
+------------
+------------
 - RubsNewgate
