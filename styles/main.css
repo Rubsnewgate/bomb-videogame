@@ -23,7 +23,8 @@ body {
   font-size: 4.5rem;
   margin-bottom: 20px;
 }
-#game__menu button {
+
+#btn__startGame {
   width: 100px;
   padding: 10px 20px;
   font-family: inherit;
@@ -31,11 +32,14 @@ body {
   background-color: #fdef05;
   border-radius: 10px;
   border-color: #ff6600;
-  cursor: pointer;
   width: 100%;
+  transition: transform 0.3s ease-in-out;
 }
-#game__menu button:hover {
-  transform: scale(1.1);
+#btn__startGame:hover {
+  cursor: pointer;
+}
+#btn__startGame:hover {
+  transform: scale(1.05);
 }
 
 .game__container {
@@ -70,10 +74,9 @@ body {
   background-color: #fdef05;
   border-radius: 10px;
   border-color: #ff6600;
-  cursor: pointer;
 }
 .btns .btn:hover {
-  transform: scale(1.1);
+  cursor: pointer;
 }
 .btns .btn .btn:not(:last-child) {
   margin-right: 10px;
@@ -116,12 +119,11 @@ body {
   background-color: #fdef05;
   border-radius: 10px;
   border-color: #ff6600;
-  cursor: pointer;
   width: 20%;
   margin-bottom: 20px;
 }
 .final__message button:hover {
-  transform: scale(1.1);
+  cursor: pointer;
 }
 
 @media (max-width: 440px) {
@@ -147,12 +149,11 @@ body {
     background-color: #fdef05;
     border-radius: 10px;
     border-color: #ff6600;
-    cursor: pointer;
     width: 50%;
     margin-bottom: 20px;
   }
   .final__message button:hover {
-    transform: scale(1.1);
+    cursor: pointer;
   }
   .game__container {
     margin: 100px 0;

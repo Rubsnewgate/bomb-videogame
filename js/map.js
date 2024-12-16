@@ -1,4 +1,4 @@
-// Objeto que asigna caracteres a emojis
+// objeto que asigna caracteres a emojis
 const emojis = {
 	'-': ' ',
 	'I': '🏁',
@@ -7,10 +7,11 @@ const emojis = {
 	'PLAYER': '👾',
 	'BOMB_COLLISION': '💥',
 	'HEART': '🧡',
-};
+}
 
-// Definición de mapas del juego
+// definición de mapas del juego
 const maps = []
+
 maps.push(`
   	IXXXXXXXXX
   	-XXXXXXXXX
