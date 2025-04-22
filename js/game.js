@@ -1,86 +1,92 @@
-// menu elements
-const gameMenu = document.querySelector('#game__menu')
-const startGameBtn = document.querySelector('#btn__startGame')
-startGameBtn.addEventListener('click', showCanvas)
+const domElements = {
+    // game menu
+    startGameBtn: document.querySelector('#start-game'),
+    gameMenu: document.querySelector('.game__menu'),
 
-// game elements
-const gameContainer = document.querySelector('.game__container')
-const canvas = document.querySelector('#game')
-const game = canvas.getContext("2d")
+    // game elements
+    livesIndicator: document.querySelector('#lives'),
+    gameScreen: document.querySelector('.game__screen'),
+    record: document.querySelector('#record'),
+    canvas: document.querySelector('#canvas'),
+    timer: document.querySelector('#timer'),
 
-const playerLives = document.querySelector('#lives')
-const timer = document.querySelector('#timer')
-const record = document.querySelector('#record')
+    // game btns
+    rightBtn: document.querySelector('.btn-right'),
+    leftBtn: document.querySelector('.btn-left'),
+    downBtn: document.querySelector('.btn-down'),
+    upBtn: document.querySelector('.btn-up'),
 
-const btnUp = document.querySelector('.btn-up')
-const btnDown = document.querySelector('.btn-down')
-const btnLeft = document.querySelector('.btn-left')
-const btnRight = document.querySelector('.btn-right')
+    // game over state
+    restartBtnA: document.querySelector('.btn_reset'),
+    restartBtnB: document.querySelector('.btn_reset-two'),
+    winner: document.querySelector('.winner'),
+    looser: document.querySelector('.looser'),
+}
 
-btnUp.addEventListener('click', moveUp)
-btnDown.addEventListener('click', moveDown)
-btnLeft.addEventListener('click', moveLeft)
-btnRight.addEventListener('click', moveRight)
+domElements.startGameBtn.addEventListener('click', showCanvas)
+
+domElements.rightBtn.addEventListener('click', moveRight)
+domElements.leftBtn.addEventListener('click', moveLeft)
+domElements.downBtn.addEventListener('click', moveDown)
+domElements.upBtn.addEventListener('click', moveUp)
 
 // victory or defeat of the player
-const winner = document.querySelector('.winner')
-const looser = document.querySelector('.looser')
-const restartBtn = document.querySelector('.btn_reset')
-const restartBtnTwo = document.querySelector('.btn_reset-two')
-
-restartBtn.addEventListener('click', resetGame)
-restartBtnTwo.addEventListener('click', resetGame)
+domElements.restartBtnA.addEventListener('click', resetGame)
+domElements.restartBtnB.addEventListener('click', resetGame)
 
 // window events
 window.addEventListener('load', setCanvasSize)
 window.addEventListener('resize', setCanvasSize)
 
-// global variables
+// game variables
+const canvasContext = domElements.canvas.getContext("2d")
+let playerLives = 3
+let gameLevel = 0
 let timeInterval
-let elementSize
 let canvasSize
-let timePlayer
-let level = 0
-let lives = 3
 let timeStart
+let tileSize
 
 const playerPosition = {
     x: undefined,
     y: undefined,
 }
+
 const portalPosition = {
     x: undefined,
     y: undefined,
 }
 
-let obstaculosPosition = []
-let firePosition = []
+let obstaclesPosition = []
+let burstPosition = []
 
-gameContainer.style.display = 'none'
-winner.style.display = 'none'
-looser.style.display = 'none'
+// initial game state
+domElements.gameScreen.style.display = 'none'
+domElements.winner.style.display = 'none'
+domElements.looser.style.display = 'none'
 
+// utility functions
 function showCanvas () {
-    gameContainer.style.display = 'flex'
-    gameMenu.style.display = 'none'
+    domElements.gameScreen.style.display = 'flex'
+    domElements.gameMenu.style.display = 'none'
 }
 
 function setCanvasSize () {
     canvasSize = Math.min(window.innerWidth * 0.7, window.innerHeight * 0.7)
 
-    canvas.width = canvasSize
-    canvas.height = canvasSize
+    domElements.canvas.width = canvasSize
+    domElements.canvas.height = canvasSize
 
-    // 10x10 canvas and gap between elements of 1.5px
-    elementSize = canvasSize / 10 - 1.5
+    // 10x10 canvas and gap between tiles of 1.5px
+    tileSize = canvasSize / 10 - 1.5
 
     playerPosition.x = undefined
     playerPosition.y = undefined
     startGame()
 }
 
-function showLives () {
-    playerLives.textContent = emojis['HEART'].repeat(lives)
+function showPlayerLives () {
+    domElements.livesIndicator.textContent = emojis['heart'].repeat(playerLives)
 }
 
 function showTime () {
@@ -88,66 +94,71 @@ function showTime () {
     const minutes = Math.floor(elapsedTime / 60000)
     const seconds = Math.floor((elapsedTime % 60000) / 1000)
 
-    timer.textContent = `${minutes} : ${seconds}`
+    domElements.timer.textContent = `${minutes} : ${seconds}`
 }
 
 function showRecord () {
-    record.textContent = localStorage.getItem("record_time")
+    domElements.record.textContent = localStorage.getItem("record_time")
 }
 
 function startGame () {
-    game.font = `${elementSize}px 'Montserrat'`
-    const map = maps[level]
+    canvasContext.font = `${tileSize}px 'Montserrat'`
+
+    // accessing game levels from map.js
+    const map = maps[gameLevel]
 
     if (!map) {
-        gameWin ()
+        gameWin()
         return
     }
 
-    showLives()
+    showPlayerLives()
 
-    // validación de que no exista timeStart
+    // validate that timeStart isn't initialized
     if (!timeStart) {
         timeStart = Date.now()
-        timeInterval = setInterval(showTime,1000)
+        timeInterval = setInterval(showTime, 1000)
     }
 
     showRecord()
 
-    // dividir cada mapa en arrays bidimendionales
+    // convert string map to an array
     const mapRows = map.trim().split('\n')
-    const mapRowsClean = mapRows.map(value => value.trim())
+    console.log(mapRows)
+    const mapRowsClean = mapRows.map(element => element.trim())
+    console.log(mapRowsClean)
+    const mapRowsCols = mapRowsClean.map(element => element.split(''))
+    console.log(mapRowsClean)
 
-    const mapRowsCols = mapRowsClean.map(value => value.split(''))
+    // clean the canvas
+    canvasContext.clearRect(0, 0, canvasSize, canvasSize)
 
-    // limpiar canvas
-    game.clearRect(0, 0, canvasSize, canvasSize)
-
-    // limpiar array de obstáculos
-    obstaculosPosition = []
+    // clean obstacles array
+    obstaclesPosition = []
 
     mapRowsCols.forEach((row, rowIndex) => {
         row.forEach((column, columnIndex) => {
-            const xPosition = elementSize * columnIndex
-            const yPosition = elementSize * (rowIndex + 1)
+            const xPosition = tileSize * columnIndex
+            const yPosition = tileSize * (rowIndex + 1)
 
-            // renderizado del mapa del juego
-            game.fillText(emojis[column], xPosition, yPosition)
+            // render the game map
+            canvasContext.fillText(emojis[column], xPosition, yPosition)
 
-            // ubicar posición inicial del jugador
-            if (column === 'O'){
+            // player's starting position
+            if (column === 'S'){
                 if(!playerPosition.x && !playerPosition.y){
                     playerPosition.x = xPosition
                     playerPosition.y = yPosition
                 }
             }
-            else if (column === 'I') {
+            // locate finish line's position
+            else if (column === 'F') {
                 portalPosition.x = xPosition
                 portalPosition.y = yPosition
             }
-            // ubicar posición de las bombas
+            // locate bomb's position
             else if (column === 'X'){
-                obstaculosPosition.push({
+                obstaclesPosition.push({
                     x: Math.trunc(xPosition),
                     y: Math.trunc(yPosition),
                 })
@@ -155,23 +166,24 @@ function startGame () {
         })
     })
 
-    renderizarJugador(playerPosition.x, playerPosition.y)
-    firePosition.forEach( fire => game.fillText(emojis['BOMB_COLLISION'], fire.x, fire.y))
+    renderPlayer(playerPosition.x, playerPosition.y)
+    burstPosition.forEach((fire) => canvasContext.fillText(emojis['bombCollision'], fire.x, fire.y))
 }
 
-function levelWin () {
-    level++
-    firePosition = []
+function gameLevelWin () {
+    gameLevel++
+    burstPosition = []
     startGame()
 }
 
-function levelFail () {
-    lives--
-    if (lives <= 0) {
-        looser.style.display = 'flex'
-        gameContainer.style.display = 'none'
-        level = 0
-        lives = 3
+function gameLevelFail () {
+    playerLives--
+
+    if (playerLives <= 0) {
+        domElements.looser.style.display = 'flex'
+        domElements.gameScreen.style.display = 'none'
+        gameLevel = 0
+        playerLives = 3
         timeStart = null
     }
 
@@ -180,30 +192,30 @@ function levelFail () {
     startGame()
 }
 
-function renderizarJugador (x , y) {
-    game.fillText(emojis['PLAYER'], x, y)
+function renderPlayer (x, y) {
+    canvasContext.fillText(emojis['player'], x, y)
 
-    // crear una variable por cada distinta colisión (en eje X e Y)
+    // create a variable for each different collision (on the x and y axes)
     const portalCollisionX = Math.trunc(playerPosition.x) === Math.trunc(portalPosition.x)
     const portalCollisionY = Math.trunc(playerPosition.y) === Math.trunc(portalPosition.y)
     const isPlayerInPortal = portalCollisionX && portalCollisionY
 
     if (isPlayerInPortal) {
-        levelWin ()
+        gameLevelWin ()
     }
 
-    // determinar colisiones (bombas)
-    obstaculosPosition.forEach(enemy => {
-        const enemyColisionX = Math.trunc(enemy.x) === Math.trunc(playerPosition.x)
-        const enemyColisionY = Math.trunc(enemy.y) === Math.trunc(playerPosition.y)
-        const bombExplode = enemyColisionX && enemyColisionY
+    // determine collisions (bombs)
+    obstaclesPosition.forEach((bomb) => {
+        const bombCollisionX = Math.trunc(bomb.x) === Math.trunc(playerPosition.x)
+        const bombCollisionY = Math.trunc(bomb.y) === Math.trunc(playerPosition.y)
+        const bombExplode = bombCollisionX && bombCollisionY
 
         if (bombExplode) {
-            firePosition.push({
-                x: enemy.x,
-                y: enemy.y,
+            burstPosition.push({
+                x: bomb.x,
+                y: bomb.y,
             })
-            levelFail()
+            gameLevelFail()
         }
     })
 }
@@ -217,18 +229,19 @@ function gameWin () {
     if (recordTime) {
         if (recordTime > playerTime) {
             localStorage.setItem("record_time", playerTime)
-            record.textContent = 'Superaste tu marca!'
+            domElements.record.textContent = 'New record time!'
         }
         else {
-            record.textContent = 'No lograste superar tu marca!'
+            domElements.record.textContent = 'Your record still stands!'
         }
     }
     else {
         localStorage.setItem("record_time", playerTime)
-        record.textContent = 'Has logrado una nueva marca!'
+        domElements.record.textContent = 'You set a new record!'
     }
-    winner.style.display = 'flex'
-    gameContainer.style.display = 'none'
+
+    domElements.winner.style.display = 'flex'
+    domElements.gameScreen.style.display = 'none'
 }
 
 function resetGame () {
@@ -236,26 +249,29 @@ function resetGame () {
 }
 
 function moveUp () {
-    if (playerPosition.y > (elementSize)) {
-        playerPosition.y = playerPosition.y - elementSize
+    if (playerPosition.y > (tileSize)) {
+        playerPosition.y = playerPosition.y - tileSize
     }
     startGame()
 }
+
 function moveLeft () {
     if (playerPosition.x > 1) {
-        playerPosition.x = playerPosition.x - elementSize
+        playerPosition.x = playerPosition.x - tileSize
     }
     startGame()
 }
+
 function moveRight () {
-    if (playerPosition.x < canvasSize - elementSize) {
-        playerPosition.x = playerPosition.x + elementSize
+    if (playerPosition.x < canvasSize - tileSize) {
+        playerPosition.x = playerPosition.x + tileSize
     }
     startGame()
 }
+
 function moveDown () {
     if (playerPosition.y < canvasSize) {
-        playerPosition.y = playerPosition.y + elementSize
+        playerPosition.y = playerPosition.y + tileSize
     }
     startGame()
 }
@@ -278,5 +294,6 @@ function moveByKeys (event) {
             break
         default:
             console.log("No_Movement")
+            break
     }
 }

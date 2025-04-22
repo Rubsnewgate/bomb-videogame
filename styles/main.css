@@ -13,18 +13,18 @@ body {
   background-color: rebeccapurple;
 }
 
-#game__menu {
+.game__menu {
   display: grid;
   place-content: center;
   height: 100vh;
 }
-#game__menu h1 {
+.game__menu h1 {
   color: #fff;
   font-size: 4.5rem;
   margin-bottom: 20px;
 }
 
-#btn__startGame {
+#start-game {
   width: 100px;
   padding: 10px 20px;
   font-family: inherit;
@@ -35,14 +35,14 @@ body {
   width: 100%;
   transition: transform 0.3s ease-in-out;
 }
-#btn__startGame:hover {
+#start-game:hover {
   cursor: pointer;
 }
-#btn__startGame:hover {
+#start-game:hover {
   transform: scale(1.05);
 }
 
-.game__container {
+.game__screen {
   display: flex;
   flex-direction: row;
   justify-content: center;
@@ -50,7 +50,7 @@ body {
   flex-wrap: wrap;
   margin: 20px;
 }
-.game__container canvas {
+.game__screen canvas {
   border: 4px solid #ff6600;
   border-radius: 10px;
   background-color: #feff9d;
@@ -155,7 +155,7 @@ body {
   .final__message button:hover {
     cursor: pointer;
   }
-  .game__container {
+  .game__screen {
     margin: 100px 0;
   }
   .btns {

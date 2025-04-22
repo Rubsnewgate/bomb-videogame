@@ -35,7 +35,7 @@ body
 	background-color: rebeccapurple
 
 // game container styles
-#game__menu
+.game__menu
 	display: grid
 	place-content: center
 	height: 100vh
@@ -44,14 +44,14 @@ body
 		font-size: 4.5rem
 		margin-bottom: 20px
 
-#btn__startGame
+#start-game
 	@include btn
 	width: 100%
 	transition: transform 0.3s ease-in-out
 	&:hover
 		transform: scale(1.05)
 
-.game__container
+.game__screen
 	@include flexCenter(row, center, center, wrap)
 	margin: 20px
 	canvas
@@ -109,7 +109,7 @@ body
 			@include btn()
 			width: 50%
 			margin-bottom: 20px
-	.game__container
+	.game__screen
 		margin: 100px 0
 	.btns
 		margin-bottom: 70px

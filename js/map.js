@@ -1,19 +1,29 @@
-// objeto que asigna caracteres a emojis
+/*
+	object that assigns characters to emojis
+	-: safe path
+	F: finish line
+	X: unsafe path
+	S: starting point
+	player: player position
+	bombCollision: indicates player collision with bombs
+	heart: player lives
+*/
+
 const emojis = {
 	'-': ' ',
-	'I': '🏁',
+	'F': '🏁',
 	'X': '💣',
-	'O': '🌀',
-	'PLAYER': '👾',
-	'BOMB_COLLISION': '💥',
-	'HEART': '🧡',
+	'S': '🌀',
+	'player': '👾',
+	'bombCollision': '💥',
+	'heart': '🧡',
 }
 
-// definición de mapas del juego
+// game maps
 const maps = []
 
 maps.push(`
-  	IXXXXXXXXX
+  	FXXXXXXXXX
   	-XXXXXXXXX
   	-XXXXXXXXX
   	-XXXXXXXXX
@@ -22,10 +32,10 @@ maps.push(`
   	-XXXXXXXXX
   	-XXXXXXXXX
   	-XXXXXXXXX
-  	OXXXXXXXXX
+  	SXXXXXXXXX
 `)
 maps.push(`
-  	O--XXXXXXX
+  	S--XXXXXXX
   	X--XXXXXXX
   	XX----XXXX
   	X--XX-XXXX
@@ -33,11 +43,11 @@ maps.push(`
   	X-XXXX-XXX
   	XX--XX--XX
   	XX--XXX-XX
-  	XXXX---IXX
+  	XXXX---FXX
   	XXXXXXXXXX
 `)
 maps.push(`
-  	I-----XXXX
+  	F-----XXXX
   	XXXXX-XXXX
   	XX----XXXX
   	XX-XXXXXXX
@@ -45,11 +55,11 @@ maps.push(`
   	XXXXXX-XXX
   	XX-----XXX
   	XX-XXXXXXX
-  	XX-----OXX
+  	XX-----SXX
   	XXXXXXXXXX
 `)
 maps.push(`
-  	OXXXXXXXXX
+  	SXXXXXXXXX
   	------XXXX
   	--XXX--XXX
   	-XXXXX--XX
@@ -58,10 +68,10 @@ maps.push(`
   	XXXXX-XXXX
   	XX----XXXX
   	---XXXXXXX
-  	IXXXXXXXXX
+  	FXXXXXXXXX
 `)
 maps.push(`
-  	XXXXIXXXXX
+  	XXXXFXXXXX
   	XXX--XXXXX
   	XXX---XXXX
   	XXX--XXXXX
@@ -70,10 +80,10 @@ maps.push(`
   	------XXXX
   	XXX-XXXXXX
   	-----XXXXX
-  	OXXXXXXXXX
+  	SXXXXXXXXX
 `)
 maps.push(`
-  	XXXXOXXXXX
+  	XXXXSXXXXX
   	XXX----XXX
   	------XXXX
   	-XXX--XXXX
@@ -81,6 +91,6 @@ maps.push(`
   	-XXXX--XXX
   	----XX--XX
   	XXX--XX-XX
-  	XXXX--IXXX
+  	XXXX--FXXX
   	XXXXXXXXXX
 `)

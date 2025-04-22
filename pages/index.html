@@ -1,21 +1,20 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	<meta charset="UTF-8"/>
-	<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-	<meta name="description" content="JavaScript game"/>
-	<meta name="robots" content="index, follow"/>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta name="description" content="JavaScript game">
 	<!-- font -->
-	<link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,700&family=IBM+Plex+Sans:wght@400;500;700&family=Montserrat:wght@400;500;700&display=swap" rel="stylesheet"/>
+	<link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,700&family=IBM+Plex+Sans:wght@400;500;700&family=Montserrat:wght@400;500;700&display=swap" rel="stylesheet">
 	<title>Bomber! | Game online</title>
 	<!-- styles -->
-	<link rel="stylesheet" href="../styles/main.css"/>
+	<link rel="stylesheet" href="../styles/main.css">
 </head>
 <body>
-	<main>
-		<section id="game__menu">
+	<main class="game">
+		<section class="game__menu">
 			<h1> Bomber! 💣 </h1>
-			<button id="btn__startGame" class="btn"> Start Game </button>
+			<button id="start-game" class="btn"> Start Game </button>
 		</section>
 
 		<div class="winner final__message">
@@ -25,11 +24,11 @@
 
 		<div class="looser final__message">
 			<h2> 💀 You have been defeated! 💀 </h2>
-			<button class="btn btn_reset-two"> Reset playing </button>
+			<button class="btn btn_reset-two"> Reset Game </button>
 		</div>
 
-		<section class="game__container">
-			<canvas id="game"></canvas>
+		<section class="game__screen">
+			<canvas id="canvas"></canvas>
 
 			<div class="btns">
 				<button class="btn btn-up">Up</button>
